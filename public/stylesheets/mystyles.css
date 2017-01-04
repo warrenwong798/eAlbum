@@ -1,0 +1,143 @@
+body {
+  /*padding: 50px;*/
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+header {
+  height: 14vh;
+  width: 100vw;
+  /*background-color: #222222;*/
+}
+
+section {
+  background-color: #575757;
+  border-style: solid;
+  height: 86vh;
+  min-height: 100%;
+  width: 100vw;
+}
+
+.row {
+  margin: 0!important;
+  padding: 2px;
+  padding-bottom: 6px;
+}
+
+#list{
+  background-color: #848484;
+  height: 100%;
+  border-right: solid;
+  padding: 0;
+  margin: 0;
+}
+
+#title{
+  /*font-size: 32px;
+  font-style: bold;*/
+  color: #42aecb;
+}
+
+#photoArea{
+  height: 100%;
+  color: #DDDDDD;
+}
+
+.header{
+  padding-top: 35px;
+}
+
+button:hover{
+  color: #42aecb;
+}
+
+.album{
+  /*padding: 15px;*/
+  font-size: 16px;
+  width: 100%;
+  line-height: 3;
+}
+
+.album:hover{
+  background-color: #747474;
+}
+.album:active{
+  background-color: #747474;
+}
+
+.album-table{
+  width: 100%;
+}
+
+.album-name{
+  /*color: #42aeee;*/
+  padding: 7px;
+}
+
+.fail-msg{
+  font-size: 16px;
+}
+
+img {
+  width: 100%;
+  height: 25vh;
+}
+
+.image{
+  padding-left: 2px;
+  padding-right: 2px;
+  height: 300px;
+}
+
+.album-btn{
+  color:#000000;
+  /*float:right;*/
+}
+
+#greeting{
+  font-size: 20px;
+  font-style: bold;
+}
+
+footer {
+    /*font-family: Consolas;*/
+
+    position: fixed;
+    bottom: 0;
+    /*left: 0;*/
+    height: 50px;
+    /*background: grey;*/
+    width: 100%;
+
+    display: -webkit-flex;
+    display:         flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+
+    /*font-size: larger;*/
+}
+
+.enlargePhoto {
+  width: 60vw;
+  height: 55vh;
+  padding 40px;
+  margin-left: 45px;
+}
+
+.like {
+  text-align: center;
+  font-size: large;
+}
+
+.forColor{
+  background-color: #57575757;
+}
+
+.input {
+  /*font-size: 16px;*/
+}

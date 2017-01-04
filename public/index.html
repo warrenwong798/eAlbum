@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>iAlbum</title>
+  <link rel="stylesheet" href="/stylesheets/mystyles.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+</head>
+
+<body ng-app="iAlbum" ng-controller="iAlbumController" ng-init="init()">
+
+  <header>
+    <h1 id = "title" class="col-xs-4">
+      iAlbum <span class="fail-msg" ng-show="loginFail == true">Login failure</span>
+    </h1>
+    <div id="greeting" class = "col-xs-6 header" ng-show="loggedIn == true">
+      Hello {{username}}!
+    </div>
+    <div id = "username" class="input col-xs-3 header" ng-show="loggedIn == false">
+      <strong>username: </strong><input type="text" ng-model="inputName">
+    </div>
+    <div id = "password" class="input col-xs-3 header" ng-show="loggedIn == false">
+      <strong>password: </strong><input type="text" ng-model="inputPassword">
+    </div>
+    <div id="login" class="input-btn col-xs-2 header" ng-show="loggedIn == false">
+      <button ng-click="login()">Log in</button>
+    </div>
+    <div id="logout" class="input-btn col-xs-2 header" ng-show="loggedIn == true">
+      <button ng-click="logout()">Log out</button>
+    </div>
+  </header>
+
+  <section>
+
+    <div id="list" class="col-xs-3">
+      <table class="album-table" ng-show="loggedIn == true">
+        <tbody>
+          <tr class="album">
+            <td id="0" class="album-name" ng-click="back();displayAlbum(0);highlight(0);">My Album</td>
+          </tr>
+          <tr class="album" ng-repeat="friend in friendList">
+            <td class="album-name" id="{{friend._id}}" ng-click="back();displayAlbum(friend._id);highlight(friend._id);">{{friend.username}}'s Album</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="photoArea" class="col-xs-9">
+
+      <div class="row" ng-show="(loggedIn == true)&&(enlarge == true)">
+        <div class="row">
+          <div class="col-xs-offset-11 col-xs-1">
+            <button class="album-btn" ng-click="back();reload();">X</button>
+          </div>
+        </div>
+        <div class="row">
+          <img class="enlargePhoto" ng-src="{{enlargePhoto.url}}" id = "{{enlargePhoto._id}}" />
+        </div>
+        <div class="row">
+          <div class="col-xs-8 like" ng-show="enlargePhoto.likedby.length > 0">
+            <span ng-repeat="person in enlargePhoto.likedby">
+              {{person}}{{$last ? '' : ', '}}
+            </span>
+            liked this photo!
+          </div>
+          <div class="col-xs-4" ng-show="(myAlbum == true) && (enlargePhoto.likedby.length > 0)">
+            <button class="album-btn" ng-click="delete(enlargePhoto, 1)">Delete</button>
+          </div>
+          <div class="col-xs-offset-8 col-xs-4" ng-show="(myAlbum == true) && (enlargePhoto.likedby.length <= 0)">
+            <button class="album-btn" ng-click="delete(enlargePhoto, 1)">Delete</button>
+          </div>
+          <div class="col-xs-4" ng-show="(myAlbum == false) && (enlargePhoto.likedby.length > 0)">
+            <button class="album-btn" ng-click="like(enlargePhoto)">Like</button>
+          </div>
+          <div class="col-xs-offset-8 col-xs-4" ng-show="(myAlbum == false) && (enlargePhoto.likedby.length <= 0)">
+            <button class="album-btn" ng-click="like(enlargePhoto)">Like</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 forColor" ng-show="(loggedIn == true)&&(enlarge == false)">
+        <div class="col-xs-4 image forColor" ng-repeat="photo in photoList">
+          <div class="row">
+            <a href="#" ng-click="enlargeThis(photo)">
+              <img ng-src="{{photo.url}}" id="{{photo._id}}" />
+            </a>
+          </div>
+          <div class="row">
+            <div class="col-xs-8" ng-show="photo.likedby.length > 0">
+              <span ng-repeat="person in photo.likedby">
+                {{person}}{{$last ? '' : ', '}}
+              </span>
+              liked this photo!
+            </div>
+            <div class="col-xs-4" ng-show="(myAlbum == true) && (photo.likedby.length > 0)">
+              <button class="album-btn" ng-click="delete(photo, 0)">Delete</button>
+            </div>
+            <div class="col-xs-4" ng-show="(myAlbum == false) && (photo.likedby.length > 0)">
+              <button class="album-btn" ng-click="like(photo)">Like</button>
+            </div>
+            <div class="col-xs-offset-8 col-xs-4" ng-show="(myAlbum == true) && (photo.likedby.length <= 0)">
+              <button class="album-btn" ng-click="delete(photo, 0)">Delete</button>
+            </div>
+            <div class="col-xs-offset-8 col-xs-4" ng-show="(myAlbum == false) && (photo.likedby.length <= 0)">
+              <button class="album-btn" ng-click="like(photo)">Like</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="col-xs-12" ng-show="(myAlbum == true) && (enlarge == false)">
+          <div class="col-xs-offset-3 col-xs-4">
+            <input type="file" id="selectFile">
+          </div>
+          <div class="col-xs-3">
+            <button class="album-btn" ng-click="upload()">Upload Photo</button>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+
+  </section>
+
+  <script src="/javascripts/myscripts.js"></script>
+
+</body>
+
+</html>
